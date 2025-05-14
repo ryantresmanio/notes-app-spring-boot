@@ -1,0 +1,3 @@
+2025-05-14 18:32:02.028917+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "NOTE_CONTENT CHARACTER VARYING(255)": "U&'Alam mo ba muntikan na\\000aSumuko ang puso ko\\000aSa paulit-ulit na pagkakata... (535)"; SQL statement:
+insert into note (note_content,title,id) values (?,?,?) [22001-232]
