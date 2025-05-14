@@ -1,46 +1,67 @@
 package com.chwesh.notesapp.service;
 
 import com.chwesh.notesapp.model.Note;
+import com.chwesh.notesapp.repository.NoteRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService {
 
-    List<Note> notes = new ArrayList<>();
 
-    public NoteService() {
+    private final NoteRepository noteRepository;
+
+    public NoteService(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
+    }
+
+    /*public NoteService() {
+
+
+
         notes.add(new Note(1, "Buy Milk", "Remember to buy milk"));
         notes.add(new Note(2, "Finish Homework", "Complete the math exercises"));
         notes.add(new Note(3, "Call Mom", "Check in with Mom about weekend plans"));
-    }
+    }*/
+
+    /*@PostConstruct
+    public void initData() {
+        // Only add if DB is empty to avoid duplication on restart
+        if (noteRepository.count() == 0) {
+            noteRepository.save(new Note(1, "Buy Milk", "Remember to buy milk"));
+            noteRepository.save(new Note(2, "Finish Homework", "Complete the math exercises"));
+            noteRepository.save(new Note(3, "Call Mom", "Check in with Mom about weekend plans"));
+        }
+    }*/
 
     public List<Note> getAllNotes() {
-        return notes;
+        return noteRepository.findAll();
     }
 
     public Note getNoteById(Integer id) {
-        for (Note note : notes) {
-            if (note.getId().equals(id)) {
-                return note;
-            }
-        }
-        return null; // or throw a custom exception if not found
+        Optional<Note> note = noteRepository.findById(id);
+        return note.orElse(null);  // Return null if the note is not found
     }
 
     public void addNote(Note note) {
-        int newId = notes.stream()
-                .mapToInt(Note::getId)
-                .max()
-                .orElse(0) + 1; // Get the max ID and add 1 to it
-        note.setId(newId);
-        notes.add(note);
+        noteRepository.save(note);
     }
 
+
     public void deleteNoteById(Integer id) {
-        notes.removeIf(note -> note.getId().equals(id));
+        noteRepository.deleteById(id);
+    }
+
+    public void updateNote(Integer id, Note updatedNote) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Note not found"));
+        note.setTitle(updatedNote.getTitle());
+        note.setNoteContent(updatedNote.getNoteContent());
+        noteRepository.save(note);
     }
 }

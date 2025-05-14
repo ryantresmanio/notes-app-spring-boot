@@ -1,0 +1,3 @@
+2025-05-13 19:34:07.435284+08:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "NOTEDB" not found; SQL statement:
+select * from notedb [42102-232]

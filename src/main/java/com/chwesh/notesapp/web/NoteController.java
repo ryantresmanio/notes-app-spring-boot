@@ -40,4 +40,9 @@ public class NoteController {
     public void deleteNote(@PathVariable Integer id) {
         noteService.deleteNoteById(id);
     }
+
+    @PutMapping("/notes/{id}")
+    public void updateNote(@PathVariable Integer id, @RequestBody Note updatedNote) {
+        noteService.updateNote(id, updatedNote);
+    }
 }

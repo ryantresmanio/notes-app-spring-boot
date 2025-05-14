@@ -2,8 +2,8 @@ POST http://localhost:8080/notes
 Content-Type: application/json
 
 {
-  "title": "Hello",
-  "noteContent": "Maligo"
+  "title": "First Note",
+  "noteContent": "Dear Diary, today will be different. I will smile and it will be genuine."
 }
 
 ###
@@ -11,3 +11,24 @@ GET localhost:8080/notes
 
 ###
 DELETE localhost:8080/notes/4
+
+###
+GET localhost:8080/notes/1
+
+###
+PUT http://localhost:8080/notes/1
+Content-Type: application/json
+
+{
+  "title": "S8E16",
+  "noteContent": "Dear Diary, today will be different. I will smile and it will be genuine."
+}
+
+###
+POST http://localhost:8080/notes
+Content-Type: application/json
+
+{
+"title": "Task for 10 PM",
+"noteContent": "Skin Care"
+}
